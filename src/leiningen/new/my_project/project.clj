@@ -6,7 +6,7 @@
   :license {:name "Apache License 2.0"
             :url "http://www.apache.org/licenses/LICENSE-2.0"}
 
-  :scm {:name "git" :url "https://github.com/{{github-user}}/{{name}}"}
+  :scm {:name "git" :url "https://github.com/{{github-user}}/{{name}}.git"}
 
   :dependencies [[org.clojure/clojure "1.8.0"]]
 
