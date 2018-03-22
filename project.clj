@@ -1,4 +1,4 @@
-(defproject my-project/lein-template "0.1.0-SNAPSHOT"
+(defproject my-project/lein-template "0.1.0"
   :description "Leiningen template for personal project."
   :dependencies [[clj-http "3.8.0"]]
   :license {:name "Apache License 2.0"
