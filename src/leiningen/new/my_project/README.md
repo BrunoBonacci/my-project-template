@@ -1,4 +1,5 @@
 # {{name}}
+[![Clojars Project](https://img.shields.io/clojars/v/{{group-id}}/{{name}}.svg)](https://clojars.org/{{group-id}}/{{name}}) ![CircleCi](https://img.shields.io/circleci/project/{{github-user}}/{{name}}.svg) ![last-commit](https://img.shields.io/github/last-commit/{{github-user}}/{{name}}.svg) [![Dependencies Status](https://jarkeeper.com/BrunoBonacci/safely/status.svg)](https://jarkeeper.com/{{github-user}}/{{name}})
 
 A cool library designed to ... well, that part is up to you.
 
@@ -24,4 +25,4 @@ Then it's up to you...
 
 ## License
 
-Copyright © {{year}} {{author}} - Distributed under the Apache License v 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+Copyright © {{year}} {{author}} - Distributed under the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0)
