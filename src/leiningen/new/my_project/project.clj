@@ -10,6 +10,8 @@
 
   :dependencies [[org.clojure/clojure "1.8.0"]]
 
+  :global-vars {*warn-on-reflection* true}
+
   :jvm-opts ["-server"]
 
   :profiles {:dev {:dependencies [[midje "{{midje-version}}"]
