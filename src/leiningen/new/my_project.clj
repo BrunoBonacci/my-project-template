@@ -81,6 +81,9 @@
                  ["doc/intro.md" (render "intro.md")]
                  [".gitignore" (render ".gitignore")]
                  [".hgignore" (render ".hgignore")]
+                 ["dev/user.clj" (render "user.clj" data)]
+                 ["dev/perf.clj" (render "perf.clj" data)]
+                 ["dev-resources/log4j.properties" (render "log4j.properties" data)]
                  "resources")
         (main/info "All done.\n")
         (main/info "To build and test:\n\t$ lein do clean, midje"))

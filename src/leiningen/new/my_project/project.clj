@@ -16,6 +16,8 @@
 
   :profiles {:dev {:dependencies [[midje "{{midje-version}}"]
                                   [org.clojure/test.check "{{test-check-version}}"]
-                                  [criterium "{{criterium-version}}"]]
+                                  [criterium "{{criterium-version}}"]
+                                  [org.slf4j/slf4j-log4j12 "1.7.25"]]
+                   :resource-paths ["dev-resources"]
                    :plugins      [[lein-midje "{{lein-midje-version}}"]]}}
   )
