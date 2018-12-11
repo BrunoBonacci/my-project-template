@@ -8,7 +8,11 @@ A cool library designed to ... well, that part is up to you.
 In order to use the library add the dependency to your `project.clj`
 
 ``` clojure
+;; Leiningen project
 [{{group-id}}/{{name}} "{{version}}"]
+
+;; deps.edn format
+{:deps { {{group-id}}/{{name}} "{{version}}" }}
 ```
 
 Current version: [![Clojars Project](https://img.shields.io/clojars/v/{{group-id}}/{{name}}.svg)](https://clojars.org/{{group-id}}/{{name}})

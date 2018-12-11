@@ -5,35 +5,58 @@
             [clojure.string :as str]))
 
 
-(def ^:const CLOJARS_URL "https://clojars.org/api/artifacts")
+(def ^:const CLOJARS_URL "https://clojars.org/api/artifacts/%s")
+(def ^:const MAVEN_URL   "https://search.maven.org/solrsearch/select?q=g:\"%s\" AND a:\"%s\"&rows=1&wt=json&core=gav")
 
+(def ^:const CLOJURE-PKG      "org.clojure/clojure")
+(def ^:const TEST-CHECK-PKG   "org.clojure/test.check")
 (def ^:const MIDJE-PKG        "midje")
 (def ^:const LEIN-MIDJE-PKG   "lein-midje")
-(def ^:const TEST-CHECK-PKG   "org.clojure/test.check")
 (def ^:const CRITERIUM-PKG    "criterium")
 (def ^:const LEIN-BINPLUS-PKG "lein-binplus")
-
+(def ^:const SLF4J-LOG4J-PKG  "org.slf4j/slf4j-log4j12")
 
 (def render (renderer "my-project"))
 
 
 (defn sort-by-semantic-version [versions]
   (->> versions
-       (map (partial re-find #"(\d+)\.(\d+)\.(\d+)(?:\.(\d+))?(?:-(SNAPSHOT)|(.*))?"))
-       (filter identity)
-       (map (fn [[v a b c d sn alpha-beta]]
-              (let [->int (fnil read-string "-1")]
-                [(->int a) (->int b) (->int c) (->int d) (not= sn "SNAPSHOT") alpha-beta v])))
-       sort
-       (map last)))
+     (map (partial re-find #"(\d+)\.(\d+)\.(\d+)(?:\.(\d+))?(?:-(SNAPSHOT)|(.*))?"))
+     (filter identity)
+     (map (fn [[v a b c d sn alpha-beta]]
+            (let [->int (fnil read-string "-1")]
+              [(->int a) (->int b) (->int c) (->int d) (not= sn "SNAPSHOT") alpha-beta v])))
+     sort
+     (map last)))
+
+
+(defn package-versions-clojars
+  [package]
+  (main/info "Searching for latest" package "version on Clojars.org ...")
+  (->> (:body (http/get (format CLOJARS_URL package) {:accept :edn :as :clojure}))
+     :recent_versions
+     (map :version)))
+
+
+(defn package-versions-maven
+  [package]
+  (main/info "Searching for latest" package "version on Maven Central ...")
+  (let [[gid aid] (str/split package #"/")]
+    (->> (:body (http/get (format MAVEN_URL gid aid) {:accept :json :as :json}))
+       :response
+       :docs
+       (map :v))))
+
 
 
 (defn package-versions
   [package]
-  (main/info "Searching for latest" package "version on Clojars.org ...")
-  (->> (read-string (:body (http/get (str CLOJARS_URL "/" package) {:accept :edn})))
-       :recent_versions
-       (map :version)))
+  (if (str/includes? package "org.clojure/")
+    (package-versions-maven package) ;; clojure artifacts are not up-to-date in Clojars
+    (try
+      (package-versions-clojars package)
+      (catch Exception x
+        (package-versions-maven package)))))
 
 
 
@@ -46,7 +69,8 @@
 
 
 (defn latest-version-of [package snapshot?]
-  (let [latest (latest-version (package-versions package) snapshot?)]
+  (let [versions (package-versions package)
+        latest   (latest-version versions snapshot?)]
     (main/info "Latest" package "version:" latest)
     latest))
 
@@ -65,11 +89,13 @@
                   :github-user    "BrunoBonacci"
                   :author         "Bruno Bonacci"
                   :bootstrap-version   (:bootstrap-version parsed)
+                  :clojure-version     (latest-version-of CLOJURE-PKG false)
                   :midje-version       (latest-version-of MIDJE-PKG false)
-                  :test-check-version  "0.9.0" ;;(latest-version-of TEST-CHECK-PKG false)
+                  :test-check-version  (latest-version-of TEST-CHECK-PKG false)
                   :criterium-version   (latest-version-of CRITERIUM-PKG false)
                   :lein-midje-version  (latest-version-of LEIN-MIDJE-PKG false)
-                  :year                "2018"}]
+                  :slf4j-log4j         (latest-version-of SLF4J-LOG4J-PKG false)
+                  :year                (format "%tY" (java.util.Date.))}]
         (main/info "Generating fresh project.")
         (->files data
                  ["project.clj" (render "project.clj" data)]

@@ -8,7 +8,7 @@
 
   :scm {:name "git" :url "https://github.com/{{github-user}}/{{name}}.git"}
 
-  :dependencies [[org.clojure/clojure "1.8.0"]]
+  :dependencies [[org.clojure/clojure "{{clojure-version}}"]]
 
   :global-vars {*warn-on-reflection* true}
 
@@ -17,7 +17,7 @@
   :profiles {:dev {:dependencies [[midje "{{midje-version}}"]
                                   [org.clojure/test.check "{{test-check-version}}"]
                                   [criterium "{{criterium-version}}"]
-                                  [org.slf4j/slf4j-log4j12 "1.7.25"]]
+                                  [org.slf4j/slf4j-log4j12 "{{slf4j-log4j}}"]]
                    :resource-paths ["dev-resources"]
                    :plugins      [[lein-midje "{{lein-midje-version}}"]]}}
   )
