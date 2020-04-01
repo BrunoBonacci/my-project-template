@@ -12,7 +12,7 @@ In order to use the library add the dependency to your `project.clj`
 [{{group-id}}/{{name}} "{{version}}"]
 
 ;; deps.edn format
-{:deps { {{group-id}}/{{name}} "{{version}}" }}
+{:deps { {{group-id}}/{{name}} {:mvn/version "{{version}}"}}}
 ```
 
 Current version: [![Clojars Project](https://img.shields.io/clojars/v/{{group-id}}/{{name}}.svg)](https://clojars.org/{{group-id}}/{{name}})
