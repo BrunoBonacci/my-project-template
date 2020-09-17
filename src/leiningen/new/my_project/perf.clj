@@ -1,6 +1,9 @@
 (ns perf
   (:require [{{group-id}}.{{name}} :refer :all]
-            [criterium.core :refer [bench quick-bench]]))
+            [criterium.core :refer [bench quick-bench]]
+            [clj-async-profiler.core :as prof]
+            [jmh.core :as jmh]
+            [clojure.edn :as edn]))
 
 
 (comment
@@ -9,4 +12,22 @@
 
   (bench (Thread/sleep 1000))
 
+  )
+
+
+(comment
+
+  (prof/profile
+    (bench (foo)))
+  )
+
+
+(comment
+
+  ;; Run JMH benchmarks
+  (jmh/run
+    (edn/read-string (slurp "./dev/perf/benchmarks.edn"))
+    {:type  :quick
+     :status true
+     :pprint true})
   )
