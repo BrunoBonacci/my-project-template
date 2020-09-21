@@ -24,7 +24,7 @@
                                   [criterium "{{criterium-version}}"]
                                   [org.slf4j/slf4j-log4j12 "{{slf4j-log4j}}"]
                                   [com.clojure-goes-fast/clj-async-profiler "{{clj-prof-ver}}"]
-                                  [jmh-clojure "0.3.1"]]
+                                  [jmh-clojure "{{jmh-version}}"]]
                    :resource-paths ["dev-resources"]
                    :plugins      [[lein-midje "{{lein-midje-version}}"]
                                   [lein-jmh "{{lein-jmh-version}}"]]}}

@@ -1,4 +1,4 @@
-(defproject my-project/lein-template "0.3.0"
+(defproject my-project/lein-template "0.3.1"
   :description "Leiningen template for personal project."
   :dependencies [[clj-http "3.9.1"]
                  [cheshire "5.8.1"]]
